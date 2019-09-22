@@ -36,7 +36,8 @@ func main() {
 	}
 	client := kubernetes.NewForConfigOrDie(config)
 	sharedInformers := informers.NewSharedInformerFactory(client, 10*time.Minute)
-	casekController := NewCasekController(client,sharedInformers.Core().V1().Secrets())
+	casekController := NewCasekController(client,sharedInformers.Core().V1().Secrets(),
+			sharedInformers.Core().V1().Namespaces())
 
 	sharedInformers.Start(nil)
 	casekController.Run(nil)
